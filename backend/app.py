@@ -29,8 +29,7 @@ CRITICAL MERMAID RULES:
 - You MUST use simple alphanumeric IDs for nodes (e.g., A, B, C, N1).
 - You MUST put the actual complex file names inside double quotes for the labels.
 - Example of VALID syntax: A["frontend/src/App.jsx"] --> B["backend/app.py"]
-- Example of INVALID syntax: frontend/src/App.jsx --> backend/app.py
-3. Formulate deep engineering trade-offs based on the stack choices.
+3. Formulate EXACTLY 3 critical engineering trade-offs. Keep pros and cons to EXACTLY one short, punchy sentence each. Do not write paragraphs.
 4. Draft a highly professional System Architecture README segment.
 5. Provide actionable technical interview talking points.
 """
