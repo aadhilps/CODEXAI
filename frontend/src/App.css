@@ -182,3 +182,43 @@
     border-right-color: var(--border);
   }
 }
+@media print {
+  /* 1. Reset high-level page containers so they don't break boundaries */
+  html, body, #center {
+    height: auto !important;
+    min-height: initial !important;
+    flex-grow: initial !important;
+    display: block !important; /* Switch from flex to standard block flow */
+    overflow: visible !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* 2. Flatten 3D transforms that confuse the PDF engine boundaries */
+  .hero {
+    position: static !important;
+    height: auto !important;
+  }
+
+  .hero .base,
+  .hero .framework,
+  .hero .vite {
+    position: static !important;
+    transform: none !important; /* Strips out the 3D rotation causing page overflow */
+    width: 100% !important;
+    max-width: 150px;
+    margin: 10px auto !important;
+    display: block;
+  }
+
+  /* 3. Strip structural spacers that push layouts on small-viewports */
+  #spacer {
+    display: none !important; /* Eliminates blank page layout offsets */
+  }
+
+  /* 4. Prevent components from snapping awkwardly mid-sentence */
+  #next-steps, .counter, #docs {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+}

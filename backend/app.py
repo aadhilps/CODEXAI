@@ -18,12 +18,12 @@ if not api_key:
 client = genai.Client(api_key=api_key)
 
 SYSTEM_PROMPT = """
-You are a Principal Systems Architect. Developers submit their raw, messy source code files and git logs to you.
+You are a Principal Systems Architect. Developers submit their raw, messy source code files and project description to you.
 Your task is to analyze these inputs and return a structured, production-grade project portfolio suite.
 
 Guidelines:
 1. Infer the true architecture from the source code, tracking data from input to output.
-2. Generate a valid Mermaid.js flowchart script (`graph TD...`).
+2. Generate a valid Mermaid.js flowchart script. You MUST use a Top-Down layout (`graph TD`). Do NOT use `graph LR`.
 CRITICAL MERMAID RULES:
 - Do NOT include markdown fences (```mermaid).
 - You MUST use simple alphanumeric IDs for nodes (e.g., A, B, C, N1).
@@ -40,12 +40,12 @@ def analyze_project():
     try:
         data = request.json
         raw_code_payload = data.get("code_payload", "")
-        git_log = data.get("git_log", "No git history provided.")
+        brief_desc = data.get("git_log", "No git history provided.")
 
         if not raw_code_payload:
             return jsonify({"error": "No source code payload provided for analysis."}), 400
 
-        user_content = f"RAW SOURCE CODE FILES:\n{raw_code_payload}\n\nRAW GIT HISTORY LOG:\n{git_log}"
+        user_content = f"RAW SOURCE CODE FILES:\n{raw_code_payload}\n\nBRIEF DESCRIPTION:\n{brief_desc}"
 
         # Call Gemini API with Structured Outputs enabled
         response = client.models.generate_content(
